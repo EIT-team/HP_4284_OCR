@@ -5,21 +5,26 @@ function [ impedance ] = readImpedance(webcam,y1,y2,x1,x2)
 % DESCRIPTION:
 %       The function takes a screenshot of a webcam filming the display of
 %       the Impedance analyser, crops the image to the ROI and uses OCR to
-%       calculate the impedance.
+%       store the measured data in a variable.
 %       This function is optimized for impedance measurement but can be
-%       modified for any other measuremimshent. It only recognises the
+%       modified for any other measurement. It only recognises the
 %       characters: '0123456789.kMQ-' and must be trained with the 
-%       ocrTrainer to recognise other characters
+%       ocrTrainer to recognise other characters (there is already a training
+%       session [ocrTrainingSession.mat file]).
+%       The function also recognised the exponent of the unit (e.g. Kilo, Mega...)
+%       Here only Kilo and Mega is implemented, for more the if statement must be
+%       extended and the character must be trained with the ocrTrainer to 
+%       be recognised by the script
 %
 % IMPORTANT NOTE:
 %       For best results the display should not reflect (e.g. cover it from
-%       direct light)
-%       If returned values are from/empty check if the image can be 
+%       direct light) and must not be dirty
+%       If returned values are wrong/empty check if the image can be 
 %       correctly recognized -> visit: https://uk.mathworks.com/help/vision/examples/recognize-text-using-optical-character-recognition-ocr.html 
 %       The Image might be mirrored, which must be adjusted manually
 %       (uncomment the line you need)
 %       Depending on the webcam, the OCR maybe need new calibration with
-%       ocrTrainer
+%       ocrTrainer command
 %
 % INPUTS:
 %       webcam: A webcam which is opened in MATLAB and filing the display
@@ -34,7 +39,7 @@ function [ impedance ] = readImpedance(webcam,y1,y2,x1,x2)
 %       stores the calibration for the screen font
 %
 % AUTHOR:
-%       Linus Reitmayr, University College London, 2017    
+%       Linus Reitmayr, University College London, 2017  
 
 
 
